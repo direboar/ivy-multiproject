@@ -1,60 +1,56 @@
 <project name="test1" default="clean-build" xmlns:ivy="antlib:org.apache.ivy.ant">
-	<property file="../libs/build.properties"/>
-	<property name="ivy.lib.path" value="../libs/apache-ivy-2.3.0"/>
-	<property name="ivy.jar.file" value="${ivy.lib.path}/ivy-2.3.0.jar"/>
-	<property name="ivy.local.default.root" value="${repository.dir}/local"/>
-	<property name="ivy.shared.default.root" value="${repository.dir}/shared"/>
-    <path id="lib.path.id">
-        <fileset dir="${lib.dir}" />
-    </path>
+	<property file="../libs/build.properties" />
+	<property name="ivy.lib.path" value="../libs/apache-ivy-2.3.0" />
+	<property name="ivy.jar.file" value="${ivy.lib.path}/ivy-2.3.0.jar" />
+	<property name="ivy.local.default.root" value="${repository.dir}/local" />
+	<property name="ivy.shared.default.root" value="${repository.dir}/shared" />
+	<path id="lib.path.id">
+		<fileset dir="${lib.dir}" />
+	</path>
 	<path id="build.jar.files">
-		<fileset dir="../libs" includes="**/*.jar"/>
+		<fileset dir="../libs" includes="**/*.jar" />
 	</path>
 
 	<target name="clean">
-		<delete dir="${build.dir}"/>
+		<delete dir="${build.dir}" />
 	</target>
 
 	<target name="clean-lib" description="--> clean the project libraries directory (dependencies)">
-        <delete includeemptydirs="true" dir="${lib.dir}"/>
-    </target>
-
-	<target name="init">
-		<mkdir dir="${classes.dir}"/>
-		<mkdir dir="${lib.dir}"/>
+		<delete includeemptydirs="true" dir="${lib.dir}" />
 	</target>
 
-    <target name="load-ivy">
-    	<path id="ivy.lib.path">
-    		<pathelement location="${ivy.jar.file}"/>
-    	</path>
-    	<taskdef resource="org/apache/ivy/ant/antlib.xml"
-    	          uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
-		<ivy:cleancache/> <!--ローカルリポジトリを削除しないとキャッシュされたアーカイブが取得されてしまう-->
-    </target>
+	<target name="init">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${lib.dir}" />
+	</target>
+
+	<target name="load-ivy">
+		<path id="ivy.lib.path">
+			<pathelement location="${ivy.jar.file}" />
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+		<ivy:cleancache />
+		<!--ローカルリポジトリを削除しないとキャッシュされたアーカイブが取得されてしまう-->
+	</target>
 
 	<target name="install" depends="clean-lib,load-ivy">
-		<ivy:retrieve pattern="lib/[type]/[artifact].[ext]" file="${ivy.file}"/>
+		<ivy:retrieve pattern="lib/[type]/[artifact].[ext]" file="${ivy.file}" />
 	</target>
 
 	<target name="build" depends="clean,init">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}">
-			<classpath refid="lib.path.id"/>
+			<classpath refid="lib.path.id" />
 		</javac>
-		<jar basedir="${classes.dir}" jarfile="${jar.file}"/>
-		<zip basedir="${src.dir}" destfile="${src.file}"></zip>
+		<jar basedir="${classes.dir}" jarfile="${jar.file}" />
+		<zip basedir="${src.dir}" destfile="${src.file}">
+		</zip>
 	</target>
 
 	<target name="publish" depends="load-ivy">
-		<ivy:resolve file="${ivy.file}"/>
-    	<ivy:publish artifactspattern="${build.dir}/[artifact].[ext]"
-    		               resolver="shared"
-    			           pubrevision="${version}"
-    			           status="release"
-    		               overwrite = "true"
-    	/>
-        <echo message="project ${ant.project.name} released with version ${version}" />
+		<ivy:resolve file="${ivy.file}" />
+		<ivy:publish artifactspattern="${build.dir}/[artifact].[ext]" resolver="shared" pubrevision="${version}" status="release" overwrite="true" />
+		<echo message="project ${ant.project.name} released with version ${version}" />
 	</target>
-	<target name="clean-build" depends="clean,clean-lib,init,install,build,publish"/>
+	<target name="clean-build" depends="clean,clean-lib,init,install,build,publish" />
 
 </project>

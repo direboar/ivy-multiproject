@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0"
+    targetNamespace="http://common/config"
+    xmlns:tns="http://common/config"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="property" type="tns:property"/>
+
+  <xs:complexType name="keyValue">
+    <xs:sequence>
+      <xs:element name="key" type="xs:string" minOccurs="0"/>
+      <xs:element name="value" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="property">
+    <xs:sequence>
+      <xs:element name="keyValues" type="tns:keyValue" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

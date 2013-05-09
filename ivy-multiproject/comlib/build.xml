@@ -2,4 +2,18 @@
 	<property file="build.properties" />
 	<import file="${common.dir}/common.xml" />
 
+	<target name="schema-compile" description="xsdファイルをコンパイルし、JaxbのJavaソースを生成する">
+		<exec executable="${jdk.home}/bin/xjc.exe">
+			<arg value="-d"/>
+			<arg value="${src.dir}"/>
+			<arg value="${src.dir}/common/config/schema1.xsd"/>
+		</exec>
+	</target>
+
+	<!--taskdef name="schemagen" classname="com.sun.tools.jxc.SchemaGenTask">
+	  <classpath>
+	    <fileset dir="${jdk.home}/jre/lib" includes="**/*.jar" />
+	  </classpath>
+	</taskdef-->
+
 </project>

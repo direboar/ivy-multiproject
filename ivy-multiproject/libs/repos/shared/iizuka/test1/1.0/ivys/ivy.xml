@@ -18,7 +18,7 @@
    under the License.
 -->
 <ivy-module version="1.0">
-    <info organisation="iizuka" module="test1" revision="1.0" status="release" publication="20130429133247"/>
+    <info organisation="iizuka" module="test1" revision="1.0" status="release" publication="20130509233817"/>
     <publications>
         <artifact name="test1" type="jar" ext="jar"/>
         <artifact name="test1-src" type="source" ext="zip"/>

@@ -18,7 +18,7 @@
    under the License.
 -->
 <ivy-module version="1.0">
-    <info organisation="iizuka" module="comlib" revision="1.0" status="release" publication="20130429132608"/>
+    <info organisation="iizuka" module="comlib" revision="1.0" status="release" publication="20130509233723"/>
     <publications>
         <artifact name="comlib" type="jar" ext="jar"/>
         <artifact name="comlib-src" type="source" ext="zip"/>
